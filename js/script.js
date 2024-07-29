@@ -15,6 +15,7 @@ function windowLoaded() {
   let documentActions = (e) => {
     const targetElement = e.target
     const typeEvent = e.type
+    const targetTag = targetElement.tagName
 
     if (targetElement.closest(".menu-footer__title")) {
       if (window.innerWidth <= maxWidth) {
@@ -48,6 +49,16 @@ function windowLoaded() {
         document.querySelector('.lang-header').classList.remove('--active')
       }
     }
+    // кліки в блоці з телефонами
+    if (targetElement.closest('.contacts-header')) {
+      if (targetTag !== "A") {
+      const contactsHeader = targetElement.closest('.contacts-header')
+      contactsHeader.classList.toggle('--active')
+      }
+    } else {
+      document.querySelector('.contacts-header').classList.remove('--active')
+    }
+
   };
 
   let spollersInit = (footerSpollers, isOpen) => {
