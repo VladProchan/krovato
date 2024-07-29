@@ -1,16 +1,20 @@
 // Строгий режим
 "use strict";
 
+// перевірка на тачскрін
+const isTouchScreen = window.matchMedia("(any-hover: none)").matches
+// =================================================================
+
 window.addEventListener('load', windowLoaded)
 
 function windowLoaded() {
 
-  const maxWidth =
-    +document.querySelector(".menu-footer").dataset.spollersInit || 600;
+  const maxWidth = +document.querySelector(".menu-footer").dataset.spollersInit || 600;
   const menuFooter = document.querySelector(".menu-footer");
 
   let documentActions = (e) => {
-    const targetElement = e.target;
+    const targetElement = e.target
+    const typeEvent = e.type
 
     if (targetElement.closest(".menu-footer__title")) {
       if (window.innerWidth <= maxWidth) {
@@ -35,6 +39,15 @@ function windowLoaded() {
       }
       e.preventDefault();
     }
+    //клік на тачскрін
+    if (isTouchScreen) {
+      if (targetElement.closest('.lang-header')) {
+        const langHeader = targetElement.closest('.lang-header')
+        langHeader.classList.toggle('--active')
+      } else {
+        document.querySelector('.lang-header').classList.remove('--active')
+      }
+    }
   };
 
   let spollersInit = (footerSpollers, isOpen) => {
@@ -51,6 +64,7 @@ function windowLoaded() {
   };
 
   document.addEventListener("click", documentActions);
+  // document.addEventListener("touchstart", documentActions);
 
   let spollersAnim = (footerSpollerTitle, action) => {
     const footerSpoller = footerSpollerTitle.closest(".menu-footer__item");
